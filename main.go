@@ -29,7 +29,7 @@ func main() {
 	for consolescanner.Scan() {
 		input := consolescanner.Text()
 		fmt.Println("Sending to telegram: ", input)
-		msg := tgbotapi.NewMessage(10084376, input)
+		msg := tgbotapi.NewMessage(os.Getenv("CHATIDTELEGRAM"), input)
 		bot.Send(msg)
 	}
 
