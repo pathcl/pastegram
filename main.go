@@ -23,7 +23,6 @@ func main() {
 	}
 
 	if len(os.Args) > 1 {
-
 		log.Println(bot.Self.UserName)
 		input := strings.Join(os.Args[1:], " ")
 		msg := tgbotapi.NewMessage(chatid, input)
@@ -37,9 +36,10 @@ func main() {
 			os.Exit(1)
 		}
 		for consolescanner.Scan() {
+			log.Println(bot.Self.UserName)
 			input := consolescanner.Text()
-			fmt.Println("Sending to telegram: ", input)
 			msg := tgbotapi.NewMessage(chatid, input)
+			fmt.Println("Sending to telegram: ", input)
 			bot.Send(msg)
 		}
 	}
