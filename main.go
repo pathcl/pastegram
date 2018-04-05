@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"flag"
 	"fmt"
 	"log"
 	"os"
@@ -15,17 +16,18 @@ func main() {
 	bot, err := tgbotapi.NewBotAPI(os.Getenv("APITELEGRAM"))
 	bot.Debug = false
 
-	// replace 1111111 with your chatid
-	chatid := int64(1111111)
+	chatid := flag.Int64("chatid", 0, "your telegram chatid")
+
+	flag.Parse()
 
 	if err != nil {
 		log.Panic(err)
 	}
 
-	if len(os.Args) > 1 {
+	if len(os.Args) > 2 {
 		log.Println(bot.Self.UserName)
-		input := strings.Join(os.Args[1:], " ")
-		msg := tgbotapi.NewMessage(chatid, input)
+		input := strings.Join(os.Args[2:], " ")
+		msg := tgbotapi.NewMessage(*chatid, input)
 		fmt.Println("Sending to telegram: ", input)
 		bot.Send(msg)
 	} else {
@@ -38,7 +40,7 @@ func main() {
 		for consolescanner.Scan() {
 			log.Println(bot.Self.UserName)
 			input := consolescanner.Text()
-			msg := tgbotapi.NewMessage(chatid, input)
+			msg := tgbotapi.NewMessage(*chatid, input)
 			fmt.Println("Sending to telegram: ", input)
 			bot.Send(msg)
 		}
