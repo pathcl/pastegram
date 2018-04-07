@@ -1,11 +1,14 @@
+//TODO
+// Better way to handle errors
+
 package main
 
 import (
 	"bufio"
-	"flag"
 	"fmt"
 	"log"
 	"os"
+	"strconv"
 	"strings"
 
 	"gopkg.in/telegram-bot-api.v4"
@@ -16,18 +19,20 @@ func main() {
 	bot, err := tgbotapi.NewBotAPI(os.Getenv("APITELEGRAM"))
 	bot.Debug = false
 
-	chatid := flag.Int64("chatid", 0, "your telegram chatid")
+	if err != nil {
+		log.Panic(err)
+	}
 
-	flag.Parse()
+	chatid, err := strconv.ParseInt(os.Getenv("CHATID"), 10, 64)
 
 	if err != nil {
 		log.Panic(err)
 	}
 
-	if len(os.Args) > 2 {
-		log.Println(bot.Self.UserName)
-		input := strings.Join(os.Args[2:], " ")
-		msg := tgbotapi.NewMessage(*chatid, input)
+	if len(os.Args) > 1 {
+		input := strings.Join(os.Args[1:], " ")
+		msg := tgbotapi.NewMessage(chatid, input)
+		fmt.Println(bot.Self.UserName)
 		fmt.Println("Sending to telegram: ", input)
 		bot.Send(msg)
 	} else {
@@ -38,9 +43,9 @@ func main() {
 			os.Exit(1)
 		}
 		for consolescanner.Scan() {
-			log.Println(bot.Self.UserName)
 			input := consolescanner.Text()
-			msg := tgbotapi.NewMessage(*chatid, input)
+			msg := tgbotapi.NewMessage(chatid, input)
+			fmt.Println(bot.Self.UserName)
 			fmt.Println("Sending to telegram: ", input)
 			bot.Send(msg)
 		}
