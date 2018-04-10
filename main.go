@@ -9,7 +9,6 @@ import (
 	"log"
 	"os"
 	"strconv"
-	"strings"
 
 	"gopkg.in/telegram-bot-api.v4"
 )
@@ -29,23 +28,16 @@ func main() {
 		log.Panic(err)
 	}
 
-	if len(os.Args) > 1 {
-		input := strings.Join(os.Args[1:], " ")
+	consolescanner := bufio.NewScanner(os.Stdin)
+	if err := consolescanner.Err(); err != nil {
+		log.Println(err)
+		os.Exit(1)
+	}
+	for consolescanner.Scan() {
+		input := consolescanner.Text()
 		msg := tgbotapi.NewMessage(chatid, input)
 		fmt.Println("Sending to telegram: ", input)
 		bot.Send(msg)
-	} else {
 
-		consolescanner := bufio.NewScanner(os.Stdin)
-		if err := consolescanner.Err(); err != nil {
-			log.Println(err)
-			os.Exit(1)
-		}
-		for consolescanner.Scan() {
-			input := consolescanner.Text()
-			msg := tgbotapi.NewMessage(chatid, input)
-			fmt.Println("Sending to telegram: ", input)
-			bot.Send(msg)
-		}
 	}
 }
