@@ -13,6 +13,7 @@ Installation
 ---------
 
     $ go get github.com/pathcl/pastegram
+    $ go install github.com/pathcl/pastegram
 
 Usage
 ---------
