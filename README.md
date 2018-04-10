@@ -6,8 +6,12 @@ Send stdout to telegram chat using telegram api. You'll need to create a bot and
 Requirements
 ---------
 
-    Telegram Bot
-    Chatid of your bot
+You'll need two things:
+
+    A Telegram Bot Api token
+    The Chatid of your bot
+
+[Howto create a telegram bot](https://www.sohamkamani.com/blog/2016/09/21/making-a-telegram-bot/)
 
 Installation
 ---------
