@@ -27,4 +27,14 @@ Usage
     $ uname -a | pastegram 
     Sending to telegram:  Darwin saturno 15.6.0 Darwin Kernel Version 15.6.0: Mon Nov 13 21:58:35 PST 2017; root:xnu-3248.72.11~1/RELEASE_X86_64 x86_64
 
+Or..
+    
+    $ pastegram <<EOF
+    > https://google.com
+    > https://linux.com
+    > EOF
+
+    Sending to telegram:  https://google.com
+    Sending to telegram:  https://linux.com
+
 Please keep in mind your $GOPATH.
